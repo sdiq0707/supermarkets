@@ -1,0 +1,16 @@
+HELP.md
+target/**
+src/test/**
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+/bin/**
+/target/**
+/target/
+/bin/
