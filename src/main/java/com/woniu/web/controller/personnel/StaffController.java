@@ -1,7 +1,9 @@
 package com.woniu.web.controller.personnel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,8 @@ import com.woniu.service.IStaffService;
 @RequestMapping("staffs")
 public class StaffController {
 
+	
+	
 	@Autowired
 	   private IStaffService service;
 	@PostMapping
@@ -41,14 +45,20 @@ public class StaffController {
 	@GetMapping
 	@ResponseBody
 	public List<Staff> findAll(){
+		System.out.println("222222222222222222222222222222");
 		return service.findAll();
+		
 	}
-	@PostMapping(value = "{staffid}")
+	@GetMapping(value = "{staffid}")
 	@ResponseBody
-	public Staff findOne(@PathVariable Integer staffid) {
-		System.out.println(11111111);
+	public Map<String,Object> findOne(@PathVariable Integer staffid) {
+		
 		List<Staff> list=new ArrayList<>();
-		return service.find(staffid);
+		list.add(service.find(staffid));
+		 Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(list);
+		map.put("list", list);
+		return map;
 	}
 
 }
