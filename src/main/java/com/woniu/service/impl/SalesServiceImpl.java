@@ -46,5 +46,10 @@ public class SalesServiceImpl implements ISalesService {
 		return mapper.saleRank();
 	}
 
+	@Override
+	public List<Triple<String, Long, Double>> businessAnalysis(Integer year, Integer month) {
+		return mapper.businessAnalysis(year,month);
+	}
+
 
 }
