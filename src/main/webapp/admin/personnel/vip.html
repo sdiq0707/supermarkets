@@ -25,24 +25,23 @@ td {
         <div class="col-sm-12">                                                                                                                           
             <div class="ibox float-e-margins">                                                                                                            
                 <div class="ibox-title">                                                                                                                  
-                    <h5>员工</h5>                                                                                                                           
+                    <h5>会员</h5>                                                                                                                           
                 </div>                                                                                                                                    
-                <div class="ibox-content">                                                                                                                
-                    <div class="row">                                                                                                                     
-                        <div class="col-sm-3">                                                                                                            
-                        <div class="input-group">                                                                                                         
-                        <select v-model="keystr" style="background-color: #EBEFF9 ;font-size: 4;width: 150px;height:35px;">                               
-                            <option value="">请选择搜索关键字</option>                                                                                            
-                            <option value="staffname">按员工工号</option>                                                                                      
-                            </select>                                                                                                                     
-                        </div>                                                                                                                            
-                            <div class="input-group">                                                                                                     
-                                <input type="text" placeholder="请输入关键词" class="input-sm form-control" v-model="valuestr"> <span class="input-group-btn">  
-                                    <button type="button" class="btn btn-sm btn-primary" @click="findOne()"> 搜索</button> </span>                          
-                            </div>                                                                                                                        
-                        </div>                                                                                                                            
-                    </div>                                                                                                                                
-                </div>                                                                                                                                    
+               <div class="ibox-content">                                                                                                               
+                    <div class="row">                                                                                                                    
+                        <div class="col-sm-3">                                                                                                           
+                        <div class="input-group">                                                                                                        
+                        </div>                                                                                                                           
+                            <div class="input-group">                                                                                                    
+                                <input type="text" placeholder="请输入手机号" class="input-sm form-control" v-model="vipphone"> 
+                                
+                                <span class="input-group-btn"> 
+                                    <button type="submit" class="btn btn-sm btn-primary" @click="findOne(222)"> 搜索</button>
+                                     </span>                          
+                            </div>                                                                                                                       
+                        </div>                                                                                                                           
+                    </div>                                                                                                                               
+                </div>                                                                                                                                      
 	
 	<div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">       
 	 <button type="button" class="btn btn-outline btn-default" @click="saveUI()">   
@@ -312,6 +311,31 @@ td {
 			            	this.flag=false;                                                                    
 			     });
 			     },
+			     
+			     
+			     
+			     findOne(vipphone) {
+						var self=this;
+						$.ajax(
+						{
+							dataType:"json",
+							url:"http://localhost:9999/vips/"+vipphone,
+							type:"GET",
+							success : function(data) {
+								
+								self.list=data.list;
+							}
+						});
+						
+					},      
+			     
+			     
+			     
+			     
+			     
+			     
+			     
+			     
 			findAll() {
 				this.$http.get("http://localhost:9999/vips").then(function(result) {
 					this.list = result.body;

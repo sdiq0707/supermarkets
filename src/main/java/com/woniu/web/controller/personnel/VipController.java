@@ -1,6 +1,9 @@
 package com.woniu.web.controller.personnel;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.woniu.domain.Staff;
 import com.woniu.domain.Vip;
 import com.woniu.service.IVipService;
 
@@ -42,10 +46,17 @@ public void update(Vip vip) {
 public List<Vip> findAll(){
 	return service.findAll();
 }
-@GetMapping(value="{vipid}")
+@GetMapping(value="{vipphone}")
 @ResponseBody
-public Vip findOne(@PathVariable Integer vipid) {
-	return service.find(vipid);
+public Map<String, Object> findOne(@PathVariable Integer vipphone) {
+	List<Vip> list=new ArrayList<>();
+	list.add(service.find(vipphone));
+	 Map<String, Object> map = new HashMap<String, Object>();
+	System.out.println(list);
+	map.put("list", list);
+	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!1");
+	System.out.println(map);
+	return  map;
 }
 
 }
