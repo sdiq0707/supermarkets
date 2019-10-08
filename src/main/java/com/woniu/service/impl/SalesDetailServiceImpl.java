@@ -31,11 +31,6 @@ public class SalesDetailServiceImpl implements ISalesDetailService {
 		mapper.updateByPrimaryKeySelective(salesdetail);
 	}
 
-	@Override
-	public List<Salesdetail> findAll() {
-		List<Salesdetail> list = mapper.findAllSaleDetail();
-		return list;
-	}
 	
 	@Override
 	public Map<String,Object> findAll(int currentpage,int pagesize,String pname) {
@@ -45,9 +40,8 @@ public class SalesDetailServiceImpl implements ISalesDetailService {
 		map1.put("size",pagesize);
 		map1.put("pname","%" + pname + "%");
 		// 需要在mapper和XML中加此方法
-	//	List<Salesdetail> list = mapper.findAllSaleDetail(map1);
+		List<Salesdetail> list = mapper.findAllSaleDetail(map1);
 		
-		List<Salesdetail> list = mapper.findAllSaleDetail();
 		
 		int count = mapper.countByExample(null);
 		Map <String,Object> map=new HashMap<>();
@@ -68,5 +62,6 @@ public class SalesDetailServiceImpl implements ISalesDetailService {
 	public List<Triple<String, BigDecimal, Double>> findAllBySales() {
 		return mapper.findAllBySales();
 	}
+
 
 }

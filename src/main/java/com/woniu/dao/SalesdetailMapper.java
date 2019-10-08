@@ -6,6 +6,8 @@ import com.woniu.domain.Triple;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface SalesdetailMapper {
@@ -32,7 +34,7 @@ public interface SalesdetailMapper {
     int updateByPrimaryKey(Salesdetail record);
     
     //级联查询
-    List<Salesdetail> findAllSaleDetail();
+    List<Salesdetail> findAllSaleDetail(Map<String,Object> map);
     
     //统计商品销售数量和金额
     List<Triple<String, BigDecimal, Double>> findAllBySales();
