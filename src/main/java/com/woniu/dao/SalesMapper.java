@@ -2,6 +2,8 @@ package com.woniu.dao;
 
 import com.woniu.domain.Sales;
 import com.woniu.domain.SalesExample;
+import com.woniu.domain.Triple;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,4 +31,6 @@ public interface SalesMapper {
     int updateByPrimaryKey(Sales record);
     //用户信息表，销售详情表，会员表三表查询
     List<Sales> selectFindAll();
+    //销售统计
+    List<Triple<String,Long, Double>> saleRank();
 }
