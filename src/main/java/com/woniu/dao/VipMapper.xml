@@ -18,6 +18,28 @@
 )
   </select>
   
+  
+   <!-- 手机号查询 -->
+	<select id="findVipTypeByVipphone" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from vip
+    where vipphone = #{vipphone,jdbcType=INTEGER}
+  </select>
+	<!-- 手机号查询 -->
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

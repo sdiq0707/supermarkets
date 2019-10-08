@@ -11,6 +11,6 @@ public  interface IProductInService {
 	public void update(Productin productin);
 	public Productin findOne(Integer piid);
 	//public List<Productin> findAll();
-	List<Productin> findAll(Integer currPage,Integer pageSize);
+	List<Productin> findAll(Integer currPage,Integer pageSize,String pipayway);
 	Integer count();
 }

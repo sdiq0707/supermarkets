@@ -42,24 +42,30 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h3>进货信息</h3>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="table_basic.html#">选项1</a>
-                                </li>
-                                <li><a href="table_basic.html#">选项2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
                     </div>
+                    
+                    <!-- 模糊搜索开始 -->
+					 <fieldset class="layui-elem-field layuimini-search">
+						<div style="margin: 5px 5px 5px 5px">
+							<form class="layui-form layui-form-pane" action="">
+								<div class="layui-form-item">
+									<div class="layui-inline">
+										<label class="layui-form-label">付款方式</label>
+										<div class="layui-input-inline">
+											<input id="selectpname" type="text" v-model="pipayway"
+												autocomplete="off" class="layui-input">
+										</div>
+									</div>
+									<div class="layui-inline">
+										<button @click="findAll(1,5)" type="button"
+											class="btn btn-primary">搜索</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</fieldset> 
+					<!-- 模糊搜索结束 -->
+                    
                     <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
                           <button @click="saveui()" type="button" class="btn btn-outline btn-default">
                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
@@ -71,7 +77,7 @@
                                <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
                           </button>
                     </div>
-                    <div class="ibox-content">
+					<div class="ibox-content">
                         <table class="table table-striped table-hover table-bordered ">
                             <thead >
 								<tr>
@@ -329,7 +335,8 @@
 			el:"#show",
 			data:{
 				list:"",
-				countx:0
+				countx:0,
+				pipayway:""
 			},
 			created(){
 				this.repalce();
@@ -345,9 +352,10 @@
 					});
 				}, */
 				findAll(currPage,pageSize){
-					mythis.$http.post("http://localhost:9999/productIns/findAll",{"currPage":currPage,"pageSize":pageSize},{emulateJSON:true}).then(function(result){
+					mythis.$http.post("http://localhost:9999/productIns/findAll",{"currPage":currPage,"pageSize":pageSize,"pipayway":mythis.pipayway},{emulateJSON:true}).then(function(result){
 						mythis.list=result.body.list;
 						mythis.countx=result.body.count;
+						mythis.pipayway=result.body.pipayway;
 					});
 				},
 				

@@ -41,8 +41,11 @@ td {
                                                      
                         </div>                                                                                                                           
                             <div class="input-group">                                                                                                    
-                                <input type="text" placeholder="请输入关键词" class="input-sm form-control" v-model="valuestr"> <span class="input-group-btn"> 
-                                    <button type="button" class="btn btn-sm btn-primary" @click="findOne()"> 搜索</button> </span>                          
+                                <input type="text" placeholder="请输入ID" class="input-sm form-control" v-model="staffid"> 
+                                
+                                <span class="input-group-btn"> 
+                                    <button type="submit" class="btn btn-sm btn-primary" @click="findOne(staffid)"> 搜索</button>
+                                     </span>                          
                             </div>                                                                                                                       
                         </div>                                                                                                                           
                     </div>                                                                                                                               
@@ -126,6 +129,7 @@ td {
 
 			</tr>
 			</thead>
+			
 			<tbody>
 			<tr v-for="item in list.slice(start,end)">
 				<td>{{item.staffid}}</td>
@@ -222,6 +226,7 @@ td {
 		var vue = new Vue({
 			el:"#app",	
 			data:{
+				list2:'',
 				id:'',
 				message:'',
 				staffid:'',
@@ -345,16 +350,20 @@ td {
 				
 				
 				
-				
-				
-				 findOne(staffid) { 
-					alert(staffid);
-					this.$http.post("http://localhost:9999/staffs/findOne",{staffid:staffid}),{emulateJSON:true}).then(function(result) {
-						this.list = result.body;
-						cn=this.list.length;	
-					    						cutpage();
+				 findOne(staffid) {
+					var self=this;
+					$.ajax(
+					{
+						dataType:"json",
+						url:"http://localhost:9999/staffs/"+staffid,
+						type:"GET",
+						success : function(data) {
+							
+							self.list=data.list;
+						}
 					});
-				}, 
+					
+				},  
 				
 				
 				
