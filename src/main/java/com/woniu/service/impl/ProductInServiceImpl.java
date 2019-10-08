@@ -36,11 +36,12 @@ public class ProductInServiceImpl implements IProductInService {
 	 * productinMapper.selectByExample(null); }
 	 */
 	@Override
-	public List<Productin> findAll(Integer currPage,Integer pageSize) {
+	public List<Productin> findAll(Integer currPage,Integer pageSize,String pipayway) {
 
-		Map<String, Integer> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<>();
         data.put("currIndex", (currPage-1)*pageSize);
         data.put("pageSize", pageSize);
+        data.put("pipayway","%" + pipayway + "%");
         
 		return productinMapper.findAllBySql(data);
 	}

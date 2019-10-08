@@ -55,16 +55,20 @@ public class ProductInController {
 	 * 
 	 * return productInservice.findAll(); }
 	 */
+	
 	@PostMapping("findAll")
-	public Map<String, Object> findAll(Integer currPage,Integer pageSize) {
-		Map<String,Object> map = new HashMap<>();
-		
-		List<Productin> list = productInservice.findAll(currPage,pageSize);
+	public Map<String, Object> findAll(Integer currPage, Integer pageSize, String pipayway) {
+		Map<String, Object> map = new HashMap<>();
+
+		List<Productin> list = productInservice.findAll(currPage, pageSize, pipayway);
 		Integer count = productInservice.count();
-		
+
 		map.put("list", list);
 		map.put("count", count);
-		
+
 		return map;
 	}
+	 
+	
+	
 }
