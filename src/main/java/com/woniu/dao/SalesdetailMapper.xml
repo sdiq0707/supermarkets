@@ -22,11 +22,23 @@
 			column="ProductID"
 			select="com.woniu.dao.ProductspecificationMapper.findProductspecificationById"></collection>
 	</resultMap>
+	
+	
+	  <select id="findAllSaleDetail" parameterType="java.util.Map"  resultMap="OtherResultMap" resultType="com.woniu.domain.Salesdetail">
+  	select  <include refid="Base_Column_List" /> from salesdetail 
+  		<where>
+  		<if test="pname!=null">
+  		and pname like #{pname} limit #{startLine},#{size}
+  		</if>
+  		</where>
+  		<if test="pname==null">
+  			 limit #{startLine},#{size}
+  		</if>
+  </select>
+	
+	
+	
 
-	<select id="findAllSaleDetail" resultMap="OtherResultMap"
-		resultType="com.woniu.domain.Salesdetail">
-		select * from salesdetail
-	</select>
 
 	<select id="findBySSId" resultMap="BaseResultMap">
 		SELECT * FROM salesdetail sd

@@ -40,6 +40,7 @@ public void update(Product product) {
 @GetMapping
 @ResponseBody
 public List<Product> findAll(){
+	System.out.println(1111);
 	List<Product> list=service.select();
 	System.out.println(list.size());
 	return list;

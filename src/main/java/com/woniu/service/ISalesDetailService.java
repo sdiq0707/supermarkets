@@ -11,7 +11,6 @@ public interface ISalesDetailService {
 	void save(Salesdetail salesdetail);
 	void delete(Integer sdid);
 	void update(Salesdetail salesdetail);
-	List<Salesdetail> findAll();
 	Salesdetail findOne(Integer sdid);
 	List<Triple<String, BigDecimal, Double>> findAllBySales();
 	
