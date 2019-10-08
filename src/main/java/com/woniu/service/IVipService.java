@@ -8,7 +8,7 @@ public interface IVipService {
 	void save(Vip vip);
 	void delete(Integer vipid);
 	void update(Vip vip);
-	Vip find(Integer vipid);
+	Vip find(Integer vipphone);
 	List<Vip> findAll();
 	
 }

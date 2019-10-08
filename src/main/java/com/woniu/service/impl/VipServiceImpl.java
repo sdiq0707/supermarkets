@@ -37,10 +37,9 @@ public class VipServiceImpl implements IVipService {
 	}
 
 	@Override
-	public Vip find(Integer vipid) {
+	public Vip find(Integer vipphone) {
 		// TODO Auto-generated method stub
-		return mapper.selectByPrimaryKey(vipid);
-		
+		return mapper.findVipTypeByVipphone(vipphone);
 	}
 
 	@Override
