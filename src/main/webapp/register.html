@@ -83,9 +83,9 @@
 						console.log(data.status+"--"+data.path);
 						
 						if(data.status == 200) {
-							layer.msg('注册成功', {icon: 6});
+							layer.msg('注册成功', {time: 2000,icon: 6});
 							if("path" in data){
-								//window.location = data.path;
+								window.location = data.path;
 							}
 						} else {
 							layer.msg('注册失败', {icon: 6});

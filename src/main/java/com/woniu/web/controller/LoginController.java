@@ -32,10 +32,6 @@ public class LoginController {
 			System.out.println(username+":"+password);
 		}
 		
-		System.out.println("loginSession:"+subject.getSession().getId());
-		
-		
-		
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 		
 		Map<String,Object> map = new HashMap<>();
@@ -55,13 +51,17 @@ public class LoginController {
 			map.put("path", path);	//跳转路径
 		}
 		
-		
-//		if(subject.isAuthenticated()) {
-////			 logger.info("用户登录成功");
-//		}else {
-////			 logger.info("用户登录失败");
-//		}
-		
+		return map;
+	}
+	
+	@PostMapping("logout")
+	public Map<String,Object> logout() {
+		Subject subject = SecurityUtils.getSubject();
+		Map<String,Object> map = new HashMap<>();
+		subject.logout();
+		map.put("status", !subject.isAuthenticated()? 200 : 500);
+		map.put("msg", "登出");
+		map.put("path", "/index.html");	//跳转路径
 		return map;
 	}
 	

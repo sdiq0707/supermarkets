@@ -89,9 +89,9 @@
 									<th>IP</th>
 									<th>使用者</th>
 									<th>使用时间</th>
-									<th>类名</th>
+									<th>用户名</th>
 									<th>方法</th>
-									<th>URL</th>
+									<th>内容</th>
 									<th>角色</th>
 									<th>操作</th>
 								</tr>
@@ -102,7 +102,7 @@
                                          <input type="checkbox" class="i-checks" :value="item.logid" name="input[]">
                                        
                                     </th>
-                                    <td>{{i+1}}</td>
+                                    <td>{{sortx+i+1}}</td>
 									<td class="text-navy">{{item.logid}}</td>
 									<td>{{item.logtype}}</td>
 									<td class="text-warning">{{item.logname}}</td>
@@ -166,7 +166,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-3 control-label">日志名称：</label>
+						<label class="col-sm-3 control-label">IP：</label>
 						<div class="col-sm-7">
 							<input id="clogname" v-model="tlog.logname" minlength="2" type="text"
 								class="form-control" required="" aria-required="true">
@@ -189,7 +189,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-3 control-label">类名：</label>
+						<label class="col-sm-3 control-label">用户名：</label>
 						<div class="col-sm-7">
 							<input id="cclassname" v-model="tlog.classname" type="text"
 							class="form-control" required="" aria-required="true">
@@ -260,7 +260,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-3 control-label">日志名称：</label>
+						<label class="col-sm-3 control-label">IP：</label>
 						<div class="col-sm-7">
 							<input id="clogname" v-model="tlog.logname" minlength="2" type="text"
 								class="form-control" required="" aria-required="true">
@@ -282,7 +282,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-3 control-label">类名：</label>
+						<label class="col-sm-3 control-label">用户名：</label>
 						<div class="col-sm-7">
 							<input id="cclassname" v-model="tlog.classname" type="text"
 							class="form-control" required="" aria-required="true">
@@ -359,7 +359,7 @@
             layui.laydate.render({
                 elem: '#test29'
                 ,theme: 'molv'
-              });
+            });
             show.findAll(pagex,sizex);
          // 调用分页
             toPage();
@@ -380,6 +380,7 @@
              	  
  				pagex = obj.curr;
  				sizex = obj.limit;
+ 				show.sortx = (pagex-1)*sizex;
  				show.findAll(obj.curr,obj.limit);
  				
  				console.log(obj.curr + " " + obj.groups+" "+show.countx);
@@ -393,10 +394,6 @@
 			var y=dd.getFullYear();
 			var m=(dd.getMonth()+1)<10?("0"+(dd.getMonth()+1)):(dd.getMonth()+1);
 			var d=dd.getDate()<10?("0"+dd.getDate()):dd.getDate();
-			/* var h=dd.getHours()<10?("0"+dd.getHours()):dd.getHours();
-            var mm=dd.getMinutes()<10?("0"+dd.getMinutes()):dd.getMinutes();
-            var s=dd.getSeconds()<10?("0"+dd.getSeconds()):dd.getSeconds();
-			return `${y}-${m}-${d}  ${h}:${mm}:${s}`; */
 			return `${y}-${m}-${d}`;
 		});
         
@@ -406,7 +403,8 @@
 			el:"#show",
 			data:{
 				list:"",
-				countx:20,
+				countx:200,
+				sortx:0,
 				ids:[1,2,3]
 			},
 			created(){
@@ -415,11 +413,8 @@
 			methods:{
 				delAll(){
 					var params={logid:this.ids};
-					alert("eeee");
 					this.$http.post("http://localhost:9999/logs/delAll",params,{emulateJSON:true}).then(function(result){
-						alert("ssss");
 					});
-					alert("vvvvvvvvv");
 				},
 				findAll(currPage,pageSize){
 					this.$http.post("http://localhost:9999/logs/findAll",{"currPage":currPage,"pageSize":pageSize},{emulateJSON:true}).then(function(result){
@@ -591,8 +586,6 @@
 			}
 		});
 		/* 修改信息的vue-update结束 */
-		
-		
 		
     </script>
 

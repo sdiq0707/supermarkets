@@ -159,7 +159,7 @@
                             <li><a class="J_menuItem" href="userinfo/userlist.html">个人设置</a>
                             </li>
                             <li><a class="J_menuItem" href="log/listlog.html">操作日志
-                                <span class="label label-danger pull-right">000</span></a>
+                                <span class="label label-danger pull-right">110</span></a>
                             </li>
                         </ul>
                     </li>
@@ -255,11 +255,54 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                admin
+                            </a>
+                            <ul class="dropdown-menu dropdown-messages">
+                            	
+                                <li class="m-t-xs">
+                                    <div class="dropdown-messages-box">
+                                        <div class="media-body">
+                                        <a href="#" class="pull-left">
+                                            <img alt="image" class="img-circle" src="../../img/a7.jpg">
+                                        </a>
+                                        	<small class="pull-right text-navy">状态：正常</small>
+                                            <strong>管理员</strong>
+                                            <br>
+                                        	<small class="pull-right text-muted">2小时前</small>
+                                            <small class="text-muted">2017.11.8</small>
+                                        </div>
+                                    </div>
+                                </li>
+                            	<li class="divider"></li>
+                            	<li>
+                                    <a class="J_menuItem" href="userinfo/userlist.html">
+                                    	<span class="glyphicon glyphicon-user"></span> 
+                                    	<strong> 个人信息</strong>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="javascript:;" onClick="logout()">
+                                        <span class="glyphicon glyphicon-plus-sign"></span> 
+                                    	<strong>切换账户</strong>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="javascript:;" onClick="logout()">
+                                        <span class="glyphicon glyphicon-off"></span> 
+                                    	<strong>退出</strong>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>
             <div class="row J_mainContent" id="content-main">
-                <iframe id="J_iframe" width="100%" height="100%" src="log/listlog.html" frameborder="0" data-id="listlog.html" seamless="seamless"></iframe>
+                <iframe id="J_iframe" width="100%" height="100%" src="index_v1.html" frameborder="0" data-id="index_v1.html" seamless="seamless"></iframe>
             </div>
         </div>
         <!--右侧部分结束-->
@@ -278,6 +321,34 @@
 
     <!-- 第三方插件 -->
     <script src="../js/plugins/pace/pace.min.js"></script>
+
+<script>
+	function logout(){
+		$.ajax({
+			type:"post",
+			url:"http://localhost:9999/users/logout",
+			headers:{
+				"Accept":"application/json"
+			},
+			beforeSend: function(){
+			},
+			complete: function(){
+			},
+			success:function(data){
+				console.log(data.status+":"+data.msg+":"+data.path);
+				if(data.status==200){
+					layer.msg('退出成功', {time: 2000,icon: 6});
+					if("path" in data){
+						window.location = data.path;
+					}
+				}
+			},
+			error: function(data) {
+				alert("error"); 
+			}
+		});
+	}
+</script>
 
 </body>
 
