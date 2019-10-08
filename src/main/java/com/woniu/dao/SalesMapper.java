@@ -33,4 +33,6 @@ public interface SalesMapper {
     List<Sales> selectFindAll();
     //销售统计
     List<Triple<String,Long, Double>> saleRank();
+    //营业分析
+    List<Triple<String,Long, Double>> businessAnalysis(Integer year, Integer month);
 }

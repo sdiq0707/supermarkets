@@ -13,4 +13,6 @@ public interface ISalesService {
 	Sales findOne(Integer saleid);
 	
 	List<Triple<String,Long, Double>> saleRank();
+	
+	List<Triple<String,Long, Double>> businessAnalysis(Integer year, Integer month);
 }
