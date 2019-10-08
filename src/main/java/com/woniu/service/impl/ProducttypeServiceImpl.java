@@ -40,4 +40,10 @@ public class ProducttypeServiceImpl implements IProducttypeService {
 		return mapper.selectByExample(null);
 	}
 
+	@Override
+	public List<Producttype> select(String ptypename) {
+		// TODO Auto-generated method stub
+		return  mapper.findProductTypeByTypeName(ptypename);
+	}
+
 }

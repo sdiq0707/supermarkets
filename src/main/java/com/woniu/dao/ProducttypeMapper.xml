@@ -13,6 +13,13 @@
   		)
   </select>
   
+  <!-- 模糊查询 -->
+	<select id="findProductTypeByTypeName" resultMap="BaseResultMap">
+	<bind name="user_name" value="'%' + _ptypename + '%'"/>
+     select * from producttype p where PTypename like #{user_name} order by p.ptypeid asc
+	</select>
+	<!-- 模糊查询 -->
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

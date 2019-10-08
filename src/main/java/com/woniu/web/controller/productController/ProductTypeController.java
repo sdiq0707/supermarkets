@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.woniu.domain.Product;
 import com.woniu.domain.Producttype;
 import com.woniu.service.IProducttypeService;
 
@@ -46,5 +47,13 @@ public class ProductTypeController {
 	@ResponseBody
 	public Producttype findOne(@PathVariable Integer ptypeid) {
 		return service.select(ptypeid);
+	}
+	//商品类型的模糊查询
+	@PostMapping("sosu")
+	@ResponseBody
+	public List<Producttype> sosu(String ptypename) {
+		System.out.println(ptypename);
+		List<Producttype> list=service.select(ptypename);
+		return list;
 	}
 }
