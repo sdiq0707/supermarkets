@@ -31,15 +31,6 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-3">
-                            <div class="input-group"> 
-                            <select v-model="keystr" style="background-color: #EBEFF9 ;font-size: 4;width: 150px;height:35px;">
-                                <option value="">请选择搜索关键字</option>
-                                <option value="pname" selected="selected">按商品名</option>
-                                <option value="ptypename">按商品类型</option>
-                                <option value="sname">按供应商</option>
-                                <option value="pstate">按商品状态</option>
-                                </select>
-                            </div>
                                 <div class="input-group">
                                     <input type="text" placeholder="请输入关键词" class="input-sm form-control" v-model="valuestr"> <span class="input-group-btn">
                                         <button type="button" class="btn btn-sm btn-primary" @click="select()"> 搜索</button> </span>
@@ -190,14 +181,13 @@
            	  laypage.render({
            	    elem: 'pages' //注意，这里的 test1 是 ID，不用加 # 号
            	    ,count: cn //数据总数，从服务端得到
-           	    ,limit:10,
-           	     limits:[10,15,20,30,50],
+           	    ,limit:5,
+           	     limits:[5,10,15,20,30,50],
            	     grops:5,
            	     layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
            	     jump: function(obj){
                        var curr=obj.curr;//当前页
                        var limit=obj.limit;//每页显示条数
-                       console.log(obj.curr+" "+obj.limit);
                             //请求当前页数据
                             vue.cutlist(curr,limit);
    					}
@@ -237,11 +227,7 @@
 				flagsave:false,
 				flag:false,
 				stateflag:false,
-				keystr:'',
-				valuestr:'',
-				params:{
-					checked:{}
-				}
+				valuestr:''
 			},
 			created(){
 				this.findAll();
@@ -274,7 +260,7 @@
 						this.start=0;
 						this.end=0;
 					}else{
-					this.start=curr>1?((curr-1)*limit+1):0;
+					this.start=curr>1?((curr-1)*limit):0;
 					var sumpage=Math.ceil(cn/limit);
 					if(curr==sumpage){
 						if(sumpage!=0){
@@ -377,7 +363,6 @@
 				}
 			}
 		});
-		
     </script>
 
 </body>

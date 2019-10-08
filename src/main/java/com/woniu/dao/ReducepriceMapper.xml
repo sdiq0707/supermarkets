@@ -9,6 +9,10 @@
     <result column="RSDate" property="rsdate" jdbcType="DATE" />
     <result column="REDate" property="redate" jdbcType="DATE" />
     <result column="ROthers" property="rothers" jdbcType="VARCHAR" />
+    <association property="product" javaType="Product">
+			<id property="productid" column="productid" />
+			<result property="pname" column="pname"/>
+	</association>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,20 +75,25 @@
   <sql id="Base_Column_List" >
     RID, ProductID, RChangePrice, RChangeVIPPrice, RSDate, REDate, ROthers
   </sql>
+  
+  <!-- 模糊查询 -->
+	<select id="selectProductByPname" resultMap="BaseResultMap">
+	<bind name="user_name" value="'%' + _name + '%'"/>
+     select r.*,p.pname from product p,reduceprice r 
+where p.ProductID=r.ProductID and 
+CONCAT(p.PName,r.ROthers,r.RChangePrice,r.RChangeVIPPrice) 
+ like #{user_name} order by r.rid asc
+	</select>
+  <!-- 模糊查询 -->
+  
+  
+  <!-- 基础查询已修改 -->
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.woniu.domain.ReducepriceExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from reduceprice
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
+    select r.*,p.pname from product p,reduceprice r 
+    where p.ProductID=r.ProductID
   </select>
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
