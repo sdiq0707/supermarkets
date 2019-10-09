@@ -170,7 +170,7 @@
         <!--左侧导航结束-->
         <!--右侧部分开始-->
         <div id="page-wrapper" class="gray-bg dashbard-1">
-            <div class="row border-bottom">
+            <div id="indexx" class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0px">
                     <div class="navbar-header" style="margin-bottom: 10px">
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="#">
@@ -179,7 +179,7 @@
                         <div class="media-body" style="margin-top: 10px">
                              <span><marquee><strong>超市管理系统 --- </strong>球只是个球，国必须深爱！！！
                              <br>
-                              <small class="text-muted">256天前 2017.11.8</small></marquee></span>
+                              <small class="text-muted">3天前 2019.10.6</small></marquee></span>
                         </div>
                     </div>
                     <ul class="nav navbar-top-links navbar-right" style="margin-top: 8px">
@@ -266,7 +266,7 @@
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                admin
+                                <span>{{user}}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-messages">
                             	
@@ -279,7 +279,7 @@
                                         	<small class="pull-right text-navy">状态：正常</small>
                                             <strong>管理员</strong>
                                             <br>
-                                        	<small class="pull-right text-muted">2小时前</small>
+                                        	<small class="pull-right text-muted">1小时前</small>
                                             <small class="text-muted">2017.11.8</small>
                                         </div>
                                     </div>
@@ -323,6 +323,7 @@
     <script src="../js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="../js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="../js/plugins/layer/layer.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
 
     <!-- 自定义js -->
     <script src="../js/hAdmin.js?v=4.1.0"></script>
@@ -347,6 +348,7 @@
 				console.log(data.status+":"+data.msg+":"+data.path);
 				if(data.status==200){
 					layer.msg('退出成功', {time: 2000,icon: 6});
+					sessionStorage.clear();
 					if("path" in data){
 						window.location = data.path;
 					}
@@ -357,6 +359,20 @@
 			}
 		});
 	}
+	var indexx=new Vue({
+		el:"#indexx",
+		data:{
+			user:""
+		},
+		created(){
+			this.userx();
+		},
+		methods:{
+			userx(){
+				this.user=sessionStorage.getItem("item");
+			}
+		}
+	});
 </script>
 
 </body>

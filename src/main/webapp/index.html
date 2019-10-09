@@ -62,9 +62,10 @@
 
 					},
 					success:function(data){
-						console.log(data.status+":"+data.msg+":"+data.path);
+						console.log(data.status+":"+data.msg+":"+data.path+":"+data.user);
 						if(data.status==200){
 							if("path" in data){
+								sessionStorage.setItem("item", data.user);
 								window.location = data.path;
 							}
 						}
@@ -75,6 +76,7 @@
 				});
 			});
 		});
+		
 	</script>
     
 
