@@ -13,8 +13,11 @@ server:
 #配置日志打印
 logging: 
   level: 
-    com: 
-      woniu: DEBUG
+    com.woniu.logInteceptor: debug
+  file: log\supermarkets.log
+#  pattern:
+#    file: "%d{yyyy/MM/dd HH:mm:ss.SSS} %-5level %msg%n"
+
 
 #配置mybatis
 mybatis:

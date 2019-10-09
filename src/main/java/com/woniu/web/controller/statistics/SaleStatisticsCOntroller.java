@@ -14,16 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.woniu.domain.Triple;
 import com.woniu.service.ISalesDetailService;
-import com.woniu.service.ISalesService;
 
 @Controller
 @RequestMapping("saleStatistics")
 public class SaleStatisticsCOntroller {
 	@Autowired
 	private ISalesDetailService service;
-	
-	@Autowired
-	private ISalesService salesService;
 	
 	@PostMapping("high")
 	@ResponseBody

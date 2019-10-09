@@ -11,12 +11,26 @@
     <result column="PIOthers" property="piothers" jdbcType="VARCHAR" />
   </resultMap>
   
+  <!-- ==============分页模糊查询============ -->
+  <select id="findAllBySql" parameterType="java.util.Map" resultMap="BaseResultMap" resultType="com.woniu.domain.Productin" >
+  	select  <include refid="Base_Column_List" /> from productin 
+  		<where>
+  		<if test="pipayway!=null">
+  		and pipayway like #{pipayway} limit #{currIndex},#{pageSize}
+  		</if>
+  		</where>
+  		<if test="pipayway==null">
+  		limit #{currIndex},#{pageSize}
+  		</if>
+  </select>
+  <!-- ================================== -->
+  
   <!-- ==============分页查询============ -->
-  <select id="findAllBySql" parameterType="java.util.Map" resultMap="BaseResultMap">
+  <!-- <select id="findAllBySql" parameterType="java.util.Map" resultMap="BaseResultMap">
   	select 
   	<include refid="Base_Column_List" />
   	from productin limit #{currIndex},#{pageSize}
-  </select>
+  </select> -->
   
   <!-- ================================== -->
   

@@ -63,7 +63,6 @@
 					},
 					success:function(data){
 						console.log(data.status+":"+data.msg+":"+data.path);
-						alert(data.status+":"+data.msg+":"+data.path);
 						if(data.status==200){
 							if("path" in data){
 								window.location = data.path;

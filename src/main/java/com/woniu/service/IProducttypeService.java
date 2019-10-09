@@ -2,6 +2,7 @@ package com.woniu.service;
 
 import java.util.List;
 
+import com.woniu.domain.Product;
 import com.woniu.domain.Producttype;
 
 
@@ -11,4 +12,5 @@ public interface IProducttypeService {
     void update(Producttype producttype);
     Producttype select(Integer ptypeid);
     List<Producttype> select();
+    List<Producttype> select(String ptypename);
 }

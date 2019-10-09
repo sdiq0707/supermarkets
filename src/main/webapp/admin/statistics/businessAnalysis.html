@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8"><link rel="icon" href="https://jscdn.com.cn/highcharts/images/favicon.ico">
+        <style>
+            /* css 代码  */    
+        </style>
+        <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+        <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+        <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+        <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+		<script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.js"></script>
+    </head>
+    <body>
+    	<div id="app">
+    		
+			<select v-model="msg">
+				<option>2018</option>
+				<option>2019</option>
+			</select>
+			<select v-model="msg2">
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+				<option>6</option>
+				<option>7</option>
+				<option>8</option>
+				<option>9</option>
+				<option>10</option>
+				<option>11</option>
+				<option>12</option>
+			</select>
+			<button @click="showTime">查看</button>
+    	</div>
+	        <div id="container" style="min-width:400px;height:400px">
+	        	
+	        </div>
+	        
+	        
+        <script>
+	        var vue = new Vue({
+				el:"#app",
+				data:{
+					msg:2019,
+					msg2:8,
+				},
+// 				created:{
+// 					this.showTime();
+// 				},
+				methods:{
+					showTime(){
+						var json = {year:this.msg,month:this.msg2};
+						$.ajax({
+							type:"post",
+							data:{
+								"year":this.msg,
+								"month":this.msg2
+							},
+							url:"/businessAnalysis/high",
+							async:false,
+							success:function(data){
+								var chart = Highcharts.chart('container', {
+						            chart: {
+						                zoomType: 'xy'
+						            },
+						            title: {
+						                text: '供应商供货详情'
+						            },
+						            subtitle: {
+						                text: '蜗牛，为你而战！'
+						            },
+						            xAxis: [{
+						                categories: data.categories,
+						                crosshair: true
+						            }],
+						            yAxis: [{ // Primary yAxis
+						                labels: {
+						                    format: '{value}次',
+						                    style: {
+						                        color: Highcharts.getOptions().colors[1]
+						                    }
+						                },
+						                title: {
+						                    text: '商品供货总件数',
+						                    style: {
+						                        color: Highcharts.getOptions().colors[1]
+						                    }
+						                }
+						            }, { // Secondary yAxis
+						                title: {
+						                    text: '商品供货总金额',
+						                    style: {
+						                        color: Highcharts.getOptions().colors[0]
+						                    }
+						                },
+						                labels: {
+						                    format: '{value}元',
+						                    style: {
+						                        color: Highcharts.getOptions().colors[0]
+						                    }
+						                },
+						                opposite: true
+						            }],
+						            tooltip: {
+						                shared: true
+						            },
+						            legend: {
+						                layout: 'vertical',
+						                align: 'left',
+						                x: 120,
+						                verticalAlign: 'top',
+						                y: 100,
+						                floating: true,
+						                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+						            },
+						            series: data.series
+						        });
+						        
+							}
+						});
+						
+					}
+					
+				}
+			});
+	        
+		</script>
+        
+		
+    </body>
+</html>

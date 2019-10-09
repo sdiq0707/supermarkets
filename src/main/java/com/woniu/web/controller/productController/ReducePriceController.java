@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.woniu.domain.Product;
 import com.woniu.domain.Reduceprice;
 import com.woniu.service.IReducepriceService;
 @Controller
@@ -44,5 +45,21 @@ public class ReducePriceController {
 	@ResponseBody
 	public Reduceprice findOne(@PathVariable Integer rid) {
 		return service.select(rid);
+	}
+	
+	
+	//截止和使用
+	@PutMapping("updown")
+	@ResponseBody
+	public void upAndDown(Integer rid) {
+		service.upAndDown(rid);
+	}
+	
+	//模糊查询
+	@PostMapping("sosu")
+	@ResponseBody
+	public List<Reduceprice> sosu(String name) {
+		List<Reduceprice> list=service.select(name);
+		return list;
 	}
 }

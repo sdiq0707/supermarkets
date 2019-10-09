@@ -1,5 +1,6 @@
 package com.woniu.dao;
 
+import com.woniu.domain.Producttype;
 import com.woniu.domain.Vip;
 import com.woniu.domain.VipExample;
 import java.util.List;
@@ -17,7 +18,11 @@ public interface VipMapper {
     int insertSelective(Vip record);
 
     List<Vip> selectByExample(VipExample example);
-
+    
+    //手机号查询方法
+    Vip findVipTypeByVipphone(Integer vipphone);
+    //
+    
     Vip selectByPrimaryKey(Integer vipid);
 
     int updateByExampleSelective(@Param("record") Vip record, @Param("example") VipExample example);

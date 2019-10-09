@@ -17,7 +17,11 @@ public interface ProducttypeMapper {
     int insertSelective(Producttype record);
 
     List<Producttype> selectByExample(ProducttypeExample example);
-
+    
+    //商品类型模糊查询方法
+    List<Producttype> findProductTypeByTypeName(String ptypename);
+    
+    
     Producttype selectByPrimaryKey(Integer ptypeid);
 
     int updateByExampleSelective(@Param("record") Producttype record, @Param("example") ProducttypeExample example);

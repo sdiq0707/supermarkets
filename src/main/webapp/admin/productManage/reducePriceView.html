@@ -1,0 +1,360 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> - 商品调价信息管理 - </title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="../favicon.ico"> 
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+     <link href="../../layui/css/layui.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="gray-bg">
+    <div id="app" class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>商品调价信息</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" placeholder="请输入关键词" class="input-sm form-control" v-model="valuestr"> <span class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary" @click="select()"> 搜索</button> </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                     <!-- 商品调价信息添加按钮 -->
+                       <button type="button" class="btn btn-outline btn-default" @click="saveUI()">
+                                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                                        <a @click="saveUI()" style="margin-top:50px;">添加调价信息</a>
+                    </div>
+                                   </button>
+               <!-- 商品调价信息添加模块 -->
+                    <div v-show="flagsave">
+		<fieldset>
+		<legend>添加商品</legend>
+			商品名:
+			     <select v-model="productid">
+			             <option value="" selected="selected">请选择</option>
+			               <option v-for="pro in productlist" :value="pro.productid">
+			                    {{pro.pname}}
+			               </option>
+			            </select>  
+			调价后价格:<input type="text" v-model="rchangeprice" /> 
+			调价后会员价格:<input type="text" v-model="rchangevipprice" /> 
+			起始日期:<input type="date" v-model="rsdate" /> 
+			终止日期:<input type="date" v-model="redate" /><span v-show="stateflag"><font color="red">截止日期不能为空</font></span> 
+			备注:
+			<select v-model="rothers">
+			<option value="已截止">已截止</option>
+			<option value="使用中" selected="selected">使用中</option>
+			</select> 
+			<button @click="save">添加</button><br>
+		</fieldset>
+		</div>
+		 <!-- 商品调价信息修改模块-->
+		<div id="updateDiv" v-show="flag">
+		<fieldset> 
+		<legend>商品调价信息修改</legend>
+			<input type="hidden" v-model="u_rid" />
+			商品名:
+			            <select v-model="u_productid">
+			               <option v-for="pro in productlist" :value="pro.productid">
+			                    {{pro.pname}}
+			               </option>
+			            </select> 
+			调价后价格:<input type="text" v-model="u_rchangeprice" /> 
+			调价后会员价格:<input type="text" v-model="u_rchangevipprice" /> 
+			起始日期:<input type="text" v-model="u_rsdate" /> <br>
+			终止日期:<input type="text" v-model="u_redate" /><span v-show="stateflag"><font color="red">截止日期不能为空</font></span>  
+			备注:
+			<select v-model="u_rothers">
+			<option value="已截止">已截止</option>
+			<option value="使用中" >使用中</option>
+			</select>
+			<button @click="update" >确认修改</button>
+			<fieldset/>
+		</div>
+                    <div class="ibox-content">
+                        <table class="table table-striped table-hover  ">
+                            <thead >
+								<tr class="alert ">
+									<th>调价编号</th>
+				                    <th>调价商品</th>
+				                    <th>调价后价格</th>
+				                    <th>调价后会员价格</th>
+				                    <th>起始日期</th>
+				                    <th>终止日期</th>
+				                    <th>备注</th>
+				                    <th>操作</th>
+								</tr>
+							</thead>
+							<tbody >
+								<tr v-for="item in list.slice(start,end)" >
+									<td>&nbsp;&nbsp;&nbsp;&nbsp;{{item.rid}}</td>
+				                    <td>{{item.product.pname}}</td>
+				                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.rchangeprice}}</td>
+				                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.rchangevipprice}}</td>
+				                    <td>{{item.rsdate|df}}</td>
+				                    <td>{{item.redate|df}}</td>
+				                    <td>{{item.rothers}}</td>
+				                    <td>
+				                    	<a class="btn btn-warning" @click="upAndDown(item)">截止 / 使用</a>
+				                    	|
+				                    	<a class="btn btn-primary" @click="updateUI(item)">修改</a>
+				                    </td>				
+								</tr>
+				
+							</tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="pages"></div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="../../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+	<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+	<script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.min.js"></script>
+
+    <!-- Peity -->
+    <script src="../../js/plugins/peity/jquery.peity.min.js"></script>
+    <!-- 自定义js -->
+    <script src="../../js/content.js?v=1.0.0"></script>
+    <!-- iCheck -->
+    <script src="../../js/plugins/iCheck/icheck.min.js"></script>
+    <!-- Peity -->
+    <script src="../../js/demo/peity-demo.js"></script>
+    <script src="../../layui/layui.js"></script>'
+   <script src="../../layui/layui.all.js"></script>
+	<!-- layerDate plugin javascript -->
+    <script src="../../js/plugins/layer/laydate/laydate.js"></script>
+<!-- 分页 -->
+
+</body>
+    <script>
+    var cn=0;
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+            layui.laydate.render({
+                elem: '#test29'
+                ,theme: 'molv'
+              });
+            cutpage();
+        });
+        function cutpage(){
+			 layui.use('laypage', function(){
+           	  var laypage = layui.laypage;
+           	  //执行一个laypage实例
+           	  laypage.render({
+           	    elem: 'pages' //注意，这里的 test1 是 ID，不用加 # 号
+           	    ,count: cn //数据总数，从服务端得到
+           	    ,limit:5,
+           	     limits:[5,10,15,20,30,50],
+           	     grops:5,
+           	     layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+           	     jump: function(obj){
+                       var curr=obj.curr;//当前页
+                       var limit=obj.limit;//每页显示条数
+                            //请求当前页数据
+                            vue.cutlist(curr,limit);
+   					}
+           	  });
+           	});
+		}
+        Vue.filter("df",function(dateStr){
+			var dd=new Date(dateStr);
+			var y=dd.getFullYear();
+			var m=dd.getMonth()+1;
+			var d=dd.getDate();
+			return `${y}-${m}-${d}`;
+		});
+		var vue=new Vue({
+			el:"#app",
+			data:{
+				start:0,
+				end:0,
+				valuestr:'',
+				productid:'',
+				rchangeprice:'',
+				rchangevipprice:'',
+				rsdate:'',
+				redate:'',
+				rothers:'使用中',
+				u_rid:'',
+				u_productid:'',
+				u_rchangeprice:'',
+				u_rchangevipprice:'',
+				u_rsdate:'',
+				u_redate:'',
+				u_rothers:'',
+				list:'',
+				flagsave:false,
+				flag:false,
+				stateflag:false,
+				productlist:''
+			},
+			created(){
+				this.findAll();
+				this.findproducts();
+			},
+			methods:{
+				
+				/* cutpage(){
+					 layui.use('laypage', function(){
+		            	  var laypage = layui.laypage;
+		            	  //执行一个laypage实例
+		            	  laypage.render({
+		            	    elem: 'pages' //注意，这里的 test1 是 ID，不用加 # 号
+		            	    ,count: cn //数据总数，从服务端得到
+		            	    ,limit:10,
+		            	     limits:[10,15,20,30,50],
+		            	     grops:5,
+		            	     layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+		            	     jump: function(obj){
+                                var curr=obj.curr;//当前页
+                                var limit=obj.limit;//每页显示条数
+                                console.log(obj.curr+" "+obj.limit);
+                                     //请求当前页数据
+            					}
+		            	  });
+		            	});
+				}, */
+				/* 获得页面当前页展示数据的开始结尾下标 */
+			 	cutlist(curr,limit){
+					if(cn==0){
+						this.start=0;
+						this.end=0;
+					}else{
+					this.start=curr>1?((curr-1)*limit):0;
+					var sumpage=Math.ceil(cn/limit);
+					if(curr==sumpage){
+						if(sumpage!=0){
+						this.end=cn;
+						}
+					}else{
+					 this.end=curr*limit;
+					}
+					}
+				}, 
+				findAll(){
+					this.$http.get("http://localhost:9999/reduceprices").then(function(result){
+						this.list=result.body;
+						cn=this.list.length;
+						cutpage();
+					});
+				},
+				findproducts(){
+					this.$http.get("http://localhost:9999/products").then(function(result){
+						this.productlist=result.body;
+						
+					});
+				},
+				
+				/* 搜索方法 */
+				
+				select(){
+					if(this.valuestr!=''||this.valuestr!=null){
+						var json={name:this.valuestr};
+					this.$http.post("http://localhost:9999/reduceprices/sosu",json, {emulateJSON:true}).then(function(result){
+						this.list=result.body;
+						cn=this.list.length;
+						cutpage();
+					});
+					}else{
+						this.findAll();
+					}
+				},
+				saveUI(){
+					this.flagsave=true;
+				},
+				save() {
+					if(this.productid==''||this.productid==null){
+						alert("商品名不能为空");
+					}else{
+						if(this.rchangeprice==''||this.rchangeprice==null){
+							alert("调价后价格不能为空,且必须为数字");
+						}else{
+					if(this.rchangevipprice==''||this.rchangevipprice==null){
+						alert("调价后会员价格不能为空,且必须为数字");
+					}else{
+						if(this.rsdate==''||this.rsdate==null){
+							this.rsdate=new Date();
+						}else{
+							if(this.redate==''||this.redate==null){
+								this.redate = (new Date()).setDate(new Date().getDate() + 15);
+								alert("默认截止日期为15 天后");
+							}else{
+					if(this.rothers=="使用中"||this.rothers=="已截止"){
+						this.stateflag=false;
+						var json = {productid:this.productid, rchangeprice:this.rchangeprice, rchangevipprice:this.rchangevipprice,rsdate:this.rsdate,redate:this.redate,rothers:this.rothers};
+						this.$http.post("http://localhost:9999/reduceprices",json).then(function() {
+							this.flagsave=false;
+							this.findAll();
+							this.productid = this.rchangeprice = this.rchangevipprice = this.rsdate=this.redate=this.rothers='';
+						});
+					}else{
+						alert("备注必须为已截止或使用中");
+					}
+					}
+				    }
+					}
+					}
+					}
+				},
+				updateUI(item) {
+					this.flag = true;
+					this.u_rid=item.rid;
+					this.u_productid=item.productid;
+					this.u_rchangeprice=item.rchangeprice;
+					this.u_rchangevipprice=item.rchangevipprice;
+					var dd=new Date(item.rsdate);
+					var y = dd.getFullYear();
+					var m = (dd.getMonth() + 1 + "").padStart(2,'0');
+					var d = (dd.getDate() + "").padStart(2,'0');
+					this.u_rsdate=`${y}/${m}/${d}`;
+					
+					var dt=new Date(item.redate);
+					var yy = dt.getFullYear();
+					var mm = (dt.getMonth() + 1 + "").padStart(2,'0');
+					var ddd = (dt.getDate() + "").padStart(2,'0');
+					this.u_redate=`${yy}/${mm}/${ddd}`;
+					this.u_rothers=item.rothers;
+					
+				},
+				update() {
+					var json = {rid:this.u_rid,productid:this.u_productid, rchangeprice:this.u_rchangeprice, rchangevipprice:this.u_rchangevipprice,rsdate:this.u_rsdate,redate:this.u_redate,rothers:this.u_rothers,"_method":"put"};
+					this.$http.post("http://localhost:9999/reduceprices",json, {emulateJSON:true}).then(function() {
+						this.findAll();
+						this.flag=false;
+					});
+					},
+					upAndDown(item) {
+						this.$http.post("http://localhost:9999/reduceprices/updown",{"rid":item.rid, "_method":"put"}, {emulateJSON:true}).then(function() {
+							this.findAll();
+						});
+					}
+				}
+		});
+		
+    </script>
+
+</body>
+</html>

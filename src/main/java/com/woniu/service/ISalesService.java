@@ -3,6 +3,7 @@ package com.woniu.service;
 import java.util.List;
 
 import com.woniu.domain.Sales;
+import com.woniu.domain.Triple;
 
 public interface ISalesService {
 	void save(Sales sales);
@@ -10,4 +11,8 @@ public interface ISalesService {
 	void update(Sales sales);
 	List<Sales> findAll();
 	Sales findOne(Integer saleid);
+	
+	List<Triple<String,Long, Double>> saleRank();
+	
+	List<Triple<String,Long, Double>> businessAnalysis(Integer year, Integer month);
 }

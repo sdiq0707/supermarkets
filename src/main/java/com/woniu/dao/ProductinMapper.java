@@ -9,7 +9,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 public interface ProductinMapper {
-	List<Productin> findAllBySql(Map<String, Integer> data);
+	List<Productin> findAllBySql(Map<String, Object> data);
 	
     int countByExample(ProductinExample example);
 
