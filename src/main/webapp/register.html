@@ -73,7 +73,6 @@
             $("button:eq(0)").click(function(){
 				var params = $("form:eq(0)").serialize();
 				// 先判断用户名密码是否为null以及是否校验过，  在发ajax请求
-				alert(params);
 				$.ajax({
 					type:"post",
 					url:"http://localhost:9999/users/register",
