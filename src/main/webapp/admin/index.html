@@ -77,7 +77,7 @@
                                 <a class="J_menuItem" href="productManage/productTypeView.html">商品类型</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="productManage/xxx.html">商品调价</a>
+                                <a class="J_menuItem" href="productManage/reducePriceView.html">商品调价</a>
                             </li>
                         </ul>
                     </li>
@@ -108,11 +108,11 @@
                             </li>
                             <li><a class="J_menuItem" href="statistics/saleRanking.html">销售排行</a>
                             </li>
-                            <li><a class="J_menuItem" href="statistics/test.html">营业分析</a>
+                            <li><a class="J_menuItem" href="statistics/businessAnalysis.html">营业分析</a>
                             </li>
                         </ul>
                     </li>
-                     <li class="line dk"></li>
+                     <!-- <li class="line dk"></li>
                     <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
                         <span class="ng-scope">收银</span>
                     </li>
@@ -137,7 +137,7 @@
                             <li><a class="J_menuItem" href="tabs_panels.html">角色管理</a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li class="line dk"></li>
                     <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
                         <span class="ng-scope">系统</span>
@@ -171,15 +171,24 @@
         <!--右侧部分开始-->
         <div id="page-wrapper" class="gray-bg dashbard-1">
             <div class="row border-bottom">
-                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-                    <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="#"><i class="fa fa-bars"></i> </a>
-                        <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
-                            <div class="form-group">
-                                <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search">
-                            </div>
-                        </form>
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0px">
+                    <div class="navbar-header" style="margin-bottom: 10px">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="#">
+                    	<i class="fa fa-bars"></i>
+                    </a>
+                        <div class="media-body" style="margin-top: 10px">
+                             <span><marquee><strong>超市管理系统 --- </strong>球只是个球，国必须深爱！！！
+                             <br>
+                              <small class="text-muted">256天前 2017.11.8</small></marquee></span>
+                        </div>
                     </div>
-                    <ul class="nav navbar-top-links navbar-right">
+                    <ul class="nav navbar-top-links navbar-right" style="margin-top: 8px">
+                    	<li class="dropdown">
+                            <a class="J_menuItem" href="index_v1.html">
+	                            <i class="fa fa-home"></i>
+	                            <span class="nav-label"></span>
+	                        </a>
+                        </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                                 <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
