@@ -74,6 +74,7 @@ public class LoginController {
 		String salt = UUID.randomUUID().toString().replaceAll("-", "");
 		SimpleHash sh = new SimpleHash("MD5", password, salt, 1024);
 		Userinfo user = new Userinfo();
+		user.setUsername(username);
 		user.setPasswd(sh.toHex());
 		user.setSalt(salt);
 		

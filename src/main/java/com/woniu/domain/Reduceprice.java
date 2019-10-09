@@ -27,5 +27,5 @@ public class Reduceprice implements Serializable{
     private Date redate;
 
     private String rothers;
-
+    private Product product;
 }

@@ -17,7 +17,11 @@ public interface ReducepriceMapper {
     int insertSelective(Reduceprice record);
 
     List<Reduceprice> selectByExample(ReducepriceExample example);
-
+    
+    //模糊查询
+    List<Reduceprice> selectProductByPname(String name);
+   //模糊查询
+    
     Reduceprice selectByPrimaryKey(Integer rid);
 
     int updateByExampleSelective(@Param("record") Reduceprice record, @Param("example") ReducepriceExample example);
