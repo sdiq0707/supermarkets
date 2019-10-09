@@ -44,7 +44,13 @@
                     <div v-show="flagsave">
 		<fieldset>
 		<legend>添加商品</legend>
-			商品名:<input type="text" v-model="productid" /> 
+			商品名:
+			     <select v-model="productid">
+			             <option value="" selected="selected">请选择</option>
+			               <option v-for="pro in productlist" :value="pro.productid">
+			                    {{pro.pname}}
+			               </option>
+			            </select>  
 			调价后价格:<input type="text" v-model="rchangeprice" /> 
 			调价后会员价格:<input type="text" v-model="rchangevipprice" /> 
 			起始日期:<input type="date" v-model="rsdate" /> 
@@ -62,10 +68,15 @@
 		<fieldset> 
 		<legend>商品调价信息修改</legend>
 			<input type="hidden" v-model="u_rid" />
-			商品名(id模拟):<input type="text" v-model="u_productid" /> 
+			商品名:
+			            <select v-model="u_productid">
+			               <option v-for="pro in productlist" :value="pro.productid">
+			                    {{pro.pname}}
+			               </option>
+			            </select> 
 			调价后价格:<input type="text" v-model="u_rchangeprice" /> 
 			调价后会员价格:<input type="text" v-model="u_rchangevipprice" /> 
-			起始日期:<input type="text" v-model="u_rsdate" /> 
+			起始日期:<input type="text" v-model="u_rsdate" /> <br>
 			终止日期:<input type="text" v-model="u_redate" /><span v-show="stateflag"><font color="red">截止日期不能为空</font></span>  
 			备注:
 			<select v-model="u_rothers">
@@ -197,10 +208,12 @@
 				list:'',
 				flagsave:false,
 				flag:false,
-				stateflag:false
+				stateflag:false,
+				productlist:''
 			},
 			created(){
 				this.findAll();
+				this.findproducts();
 			},
 			methods:{
 				
@@ -246,6 +259,12 @@
 						this.list=result.body;
 						cn=this.list.length;
 						cutpage();
+					});
+				},
+				findproducts(){
+					this.$http.get("http://localhost:9999/products").then(function(result){
+						this.productlist=result.body;
+						
 					});
 				},
 				
@@ -328,7 +347,6 @@
 					});
 					},
 					upAndDown(item) {
-						alert(111);
 						this.$http.post("http://localhost:9999/reduceprices/updown",{"rid":item.rid, "_method":"put"}, {emulateJSON:true}).then(function() {
 							this.findAll();
 						});

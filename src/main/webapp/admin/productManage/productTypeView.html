@@ -70,8 +70,8 @@
 							</thead>
 							<tbody >
 								<tr v-for="item in list.slice(start,end)" >
-									<td>{{item.ptypeid}}</td>
-				                    <td>{{item.ptypename}}</td>
+									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.ptypeid}}</td>
+				                    <td>&nbsp;{{item.ptypename}}</td>
 				                    <td>
 					                    <a class="btn btn-primary" @click="updateUI(item)">修改</a>
 				                    </td>
@@ -122,8 +122,8 @@
            	  laypage.render({
            	    elem: 'pages' //注意，这里的 test1 是 ID，不用加 # 号
            	    ,count: cn //数据总数，从服务端得到
-           	    ,limit:10,
-           	     limits:[10,15,20,30,50],
+           	    ,limit:7,
+           	     limits:[5,7,10,15,20,30,50],
            	     grops:5,
            	     layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
            	     jump: function(obj){
