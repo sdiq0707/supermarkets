@@ -353,32 +353,30 @@
             });
             show.findAll(pagex,sizex);
          // 调用分页
-            toPage();
+         //   toPage();
         });
-        var pagex = 1;
-        var sizex = 5;
+        
+        var pagex=1;
+        var sizex=5;
         function toPage(){
         	// 分页完整功能   
             layui.laypage.render({
                elem: 'pagex'
                ,count: show.countx
-              // ,theme: '#FF5722'
-               ,limit: 5
+               ,curr: pagex
+               ,limit: sizex
                ,limits: [5,7,10,15,25,30]
                ,layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
                ,jump: function(obj){
-             	  console.log(obj);
-             	  
- 				pagex = obj.curr;
- 				sizex = obj.limit;
- 				show.sortx = (pagex-1)*sizex;
- 				show.findAll(obj.curr,obj.limit);
- 				
- 				console.log(obj.curr + " " + obj.groups+" "+show.countx);
+	 				if((pagex != obj.curr) || (sizex != obj.limit)){
+	 					pagex = obj.curr;
+	 	 				sizex = obj.limit;
+	 					console.log(obj.curr + " " + obj.limit+" "+show.countx+" page1");
+	 					show.findAll(pagex,sizex);
+	 				}
                }
              });
         }
-        
         
         Vue.filter("df",function(dateStr){
 			var dd=new Date(dateStr);
@@ -394,12 +392,11 @@
 			el:"#show",
 			data:{
 				list:"",
-				countx:200,
+				countx:"",
 				sortx:0,
 				ids:[1,2,3]
 			},
 			created(){
-				// this.findAll(1,5);
 			},
 			methods:{
 				delAll(){
@@ -411,6 +408,8 @@
 					this.$http.post("http://localhost:9999/logs/findAll",{"currPage":currPage,"pageSize":pageSize},{emulateJSON:true}).then(function(result){
 						this.list=result.body.list;
 						this.countx=result.body.count;
+						this.sortx = (pagex-1)*sizex;
+						toPage();
 					});
 					/* $.ajax({
 						type:"get",
